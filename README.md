@@ -13,3 +13,10 @@ Amazon Web Services Database: data storage to keep track of all parking spots th
 
 Graphical User Interface: this will use the smart contracts and check them against the database, returning all vacant parking spots to the user.
   The GUI will need to be integrated with some sort of sorting list, sorting the list of vacancies by price for parking, distance from the user, and the time available for that specific parking spot.
+
+FOR a property owner or driver
+WHO has land or needs a parking spot
+THE Ethereum Based Parking System 
+THAT provides a way for drivers to easily find the cheapest parking spots in their area and allows property owners to use their land for parking in order to make money
+UNLIKE a regular parking app which only has access to a couple of lots and doesn’t utilize the blockchain for fast and secure authentication
+OUR product is more secure because it uses Ethereum blockchain
