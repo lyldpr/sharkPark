@@ -1,0 +1,53 @@
+pragma solidity =0.8.9;
+
+contract Park {
+    struct Owner {
+        string name;
+        uint price; //change 
+        string loc;
+        uint numSpots;
+        bool array_of_Spots; //valid spots marked 1, invalid marked 0 in array_of_Spots
+                }
+    
+    struct Parker {
+        string name;
+        string license;
+        bool parked;
+        string currSpot;
+    }
+    
+    function spotCount() public view returns(uint){              //error something wrong with syntax
+        return numSpots;
+    }
+    
+    function buySpot() public{
+        //make sure spot is valid
+        //make sure ethereum balance is valid
+        //decrement num of valid spots
+        //set currSpot equal to spot just bought
+        //bool parked = 1;
+    }
+    
+    function addSpot() public {
+        //add additional spot to owner's profile
+    }
+   
+}
+
+
+// Step 1: User clicks if they are Parker or Owner
+// Step 2: User enters in personal info
+// Step 3: If owner, enter in number of spots to register, intialize all spots to valid
+// Step 4: If parker, return list of valid parking spots with location
+
+
+
+
+
+
+
+//To Test
+// Step 1: Create owner account with 8 spots
+// Step 2: Make sure some spots are valid and some invalid
+// Step 3: Create driver account and buy a spots
+// Step 4: Add functionality for owner to change spots availability at will unless driver is parked there
