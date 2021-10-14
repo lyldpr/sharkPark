@@ -9,7 +9,7 @@ contract Park {
         uint price; //change 
         string loc;
         uint numSpots;
-        uint takenSpots; //open spots marked false, taken spots marked true in array_of_Spots
+        uint takenSpots; 
                 }
     
     struct Driver {
