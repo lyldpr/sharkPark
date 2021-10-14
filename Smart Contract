@@ -8,7 +8,7 @@ contract Park {
         uint price; //change 
         string loc;
         uint numSpots;
-        bool array_of_Spots; //valid spots marked 1, invalid marked 0 in array_of_Spots
+        bool[] array_of_Spots; //open spots marked false, taken spots marked true in array_of_Spots
                 }
     
     struct Parker {
@@ -28,12 +28,29 @@ contract Park {
         o.price = price_of_spots;
         o.loc = location;
         o.numSpots = number_of_spots;
+        o.array_of_Spots = new bool[](number_of_spots);
+        uint i;
+        for (i=0; i<=number_of_spots; i++){
+            o.array_of_Spots[i] = false;
+        }
     }
     
-    function spotCount() public view returns(uint spotNum){              //error something wrong with syntax
-        uint i = 0;
+    function totalSpotCount() public view returns(uint spotNum){              //error something wrong with syntax
+        uint i;
         for (i=0; i<=numOwners; i++) {
             spotNum = spotNum + owners[i].numSpots;
+        }
+    }
+    
+    function availSpotCount() public view returns(uint spotNum){              //error something wrong with syntax
+        uint i;
+        uint j;
+        for (i=0; i<=numOwners; i++) {
+            for (j=0; j<=owners[i].numSpots; j++){
+                if(owners[i].array_of_Spots[j] == false){
+                    spotNum++;
+                }
+            }
         }
     }
     
