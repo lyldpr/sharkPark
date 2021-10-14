@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-3.0
+
 pragma solidity =0.8.9;
 
 contract Park {
@@ -16,8 +18,23 @@ contract Park {
         string currSpot;
     }
     
-    function spotCount() public view returns(uint){              //error something wrong with syntax
-        return numSpots;
+    uint numOwners;
+    mapping (uint => Owner) owners;
+
+    function newOwner(string memory ID, uint price_of_spots, string memory location, uint number_of_spots) public returns (uint ownerID) { 
+        ownerID = numOwners++; 
+        Owner storage o = owners[ownerID];
+        o.name = ID;
+        o.price = price_of_spots;
+        o.loc = location;
+        o.numSpots = number_of_spots;
+    }
+    
+    function spotCount() public view returns(uint spotNum){              //error something wrong with syntax
+        uint i = 0;
+        for (i=0; i<=numOwners; i++) {
+            spotNum = spotNum + owners[i].numSpots;
+        }
     }
     
     function buySpot() public{
