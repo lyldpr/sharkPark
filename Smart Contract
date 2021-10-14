@@ -5,14 +5,16 @@ pragma solidity =0.8.9;
 contract Park {
     struct Owner {
         string name;
+        address payable ownerWallet;
         uint price; //change 
         string loc;
         uint numSpots;
-        bool[] array_of_Spots; //open spots marked false, taken spots marked true in array_of_Spots
+        uint takenSpots; //open spots marked false, taken spots marked true in array_of_Spots
                 }
     
-    struct Parker {
+    struct Driver {
         string name;
+        address payable driverWallet;
         string license;
         bool parked;
         string currSpot;
@@ -21,18 +23,26 @@ contract Park {
     uint numOwners;
     mapping (uint => Owner) owners;
 
-    function newOwner(string memory ID, uint price_of_spots, string memory location, uint number_of_spots) public returns (uint ownerID) { 
+    function newOwner(string memory ID, address payable adr, uint price_of_spots, string memory location, uint number_of_spots) public returns (uint ownerID) { 
         ownerID = numOwners++; 
         Owner storage o = owners[ownerID];
         o.name = ID;
+        o.ownerWallet = adr;
         o.price = price_of_spots;
         o.loc = location;
         o.numSpots = number_of_spots;
-        o.array_of_Spots = new bool[](number_of_spots);
-        uint i;
-        for (i=0; i<=number_of_spots; i++){
-            o.array_of_Spots[i] = false;
-        }
+        o.takenSpots = 0;
+    }
+    
+    uint numDrivers;
+    mapping (uint => Driver) drivers;
+    
+    function newDriver(string memory ID, address payable adr, string memory lic) public returns (uint driverID) { 
+        driverID = numDrivers++; 
+        Driver storage d = drivers[driverID];
+        d.name = ID;
+        d.driverWallet = adr;
+        d.license = lic;
     }
     
     function totalSpotCount() public view returns(uint spotNum){              //error something wrong with syntax
@@ -44,26 +54,45 @@ contract Park {
     
     function availSpotCount() public view returns(uint spotNum){              //error something wrong with syntax
         uint i;
-        uint j;
         for (i=0; i<=numOwners; i++) {
-            for (j=0; j<=owners[i].numSpots; j++){
-                if(owners[i].array_of_Spots[j] == false){
-                    spotNum++;
-                }
-            }
+            spotNum = spotNum + owners[i].numSpots - owners[i].takenSpots;
         }
     }
     
-    function buySpot() public{
-        //make sure spot is valid
-        //make sure ethereum balance is valid
-        //decrement num of valid spots
-        //set currSpot equal to spot just bought
-        //bool parked = 1;
+    function buySpot(string memory ID, string memory location) public{
+        uint i;
+        uint ownerID;
+        for (i=0; i<=numOwners; i++){
+            if (compareStrings(owners[i].name, ID)==true){
+                if (compareStrings(owners[i].loc, location)==true){
+                    ownerID = i;
+                    break;
+                }
+            }
+        }
+        Owner storage o = owners[ownerID];
+        if (o.takenSpots<o.numSpots){
+            o.takenSpots++;
+            //transact ethereum
+        }
+    }
+    function compareStrings(string memory a, string memory b) public view returns (bool) {
+        return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))));
     }
     
-    function addSpot() public {
-        //add additional spot to owner's profile
+    function changeSpots(uint change, string memory ID, string memory location) public {
+        uint i;
+        uint ownerID;
+        for (i=0; i<=numOwners; i++){
+            if (compareStrings(owners[i].name, ID)==true){
+                if (compareStrings(owners[i].loc, location)==true){
+                    ownerID = i;
+                    break;
+                }
+            }
+        }
+        Owner storage o = owners[ownerID];
+        o.numSpots = o.numSpots+change;
     }
    
 }
