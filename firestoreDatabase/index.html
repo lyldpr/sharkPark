@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--
+    <meta http-equiv="Refresh" content="0; url='createacc.html'">
+    -->
+    
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+<script src="index.js"></script>
+
+<!--
+<script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-auth.js"></script>
+
+;document.location='homepage.html'
+;document.location='createacc.html'
+-->
+
+<title>Shark Park</title>
+
+</head>
+<body>
+    <body>
+        <div class="formContainer">
+        <h1>Enter Credentials Here:</h1>
+        <input type="email" placeholder="email here" id="email"><br>
+        <input type="password" placeholder="password here" id="password"><br>
+        <button onclick="signUp()" id="signUp">SignUp</button>
+        <button onclick="signIn();document.location='createacc.html'" id="signIn">SignIn</button>
+        <button onclick="signOut();document.location='index.html'" id="signOut">SignOut</button>
+        </div>
+    <!--
+    <script type="module">
+        const firebaseConfig = {
+      
+          apiKey: "AIzaSyA-Cm528w-sxWkeP6TxFWFDQ4AbqP1q31I",
+      
+          authDomain: "sharkpark-9b579.firebaseapp.com",
+      
+          projectId: "sharkpark-9b579",
+      
+          storageBucket: "sharkpark-9b579.appspot.com",
+      
+          messagingSenderId: "565602639536",
+      
+          appId: "1:565602639536:web:3771ee87e03643b6db2575",
+      
+          measurementId: "G-ZM3JYBW45T"
+      
+        };
+      
+      
+        // Initialize Firebase
+      
+        const app = initializeApp(firebaseConfig);
+      
+        const analytics = getAnalytics(app);
+      
+      </script>
+      -->
+
+      
+</body>
+</html>
