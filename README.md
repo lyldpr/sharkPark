@@ -8,7 +8,7 @@ Things to work on:
 Ethereum Blockchain Integration: smart contracts for validating which users are parking and which slots they have parked at.
   The blockchain should be pretty straightforward as there are many tutorials, even from ethereum themselves, detailing how to set up and use smart contracts in an app. These smart contracts will be used for real-time data from users of the app, so that the app can keep track of which slots are vacant and which slots are in use.
 
-Amazon Web Services Database: data storage to keep track of all parking spots that are available within the application.
+Google Firebase Database: data storage to keep track of all parking spots that are available within the application.
   The database will obviously not be able to hold real data yet since we haven't set up any contracts with actual parking garages/lots. For the purposes of this project, the data can be fabricated for now. Later if the application progresses, we will replace this made-up, created data with parking garages/lots across charleston. Another option is to research APIs from parking garages (if they exist) and we can use this data instead.
 
 Graphical User Interface: this will use the smart contracts and check them against the database, returning all vacant parking spots to the user.
