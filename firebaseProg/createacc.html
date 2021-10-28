@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create an Account</title>
+    <h1>What will you use our service for?</h1>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+</head>
+<body>
+    
+    <button onclick="signOut()" id="signOut">Sign Out</button>
+
+    <div class="content">
+        <h3>To park at a spot most convenient for me...</h3>
+        <input type="text" id="usernameParker" placeholder="username Parker">
+        <input type="text" id="licenseDrivers" placeholder="drivers license">
+        <input type="text" id="licensePlate" placeholder="license plate">
+        <br>
+        <textarea name="" id="parkerInfo" placeholder="about me"></textarea>
+        <button id="parker">Parker</button>
+
+        <br><br><br>
+
+        <h3>To allow people to park on my property...</h3>
+        <input type="text" id="usernamePartner" placeholder="username Partner">
+        <input type="text" id="locationLot" placeholder="location of lot">
+        <input type="text" id="registration" placeholder="registration">
+        <br>
+        <textarea name="" id="partnerInfo" placeholder="about me"></textarea>
+        <button id="partner">Partner</button>
+        <!--
+        <input type="submit" id="parker" value="Driver/Parker">
+        <input type="submit" id="partner" value="Garage/Lot Partner">
+        -->
+    </div>
+    <!-- maybe use the uber method and make main app for our "users" or drivers/parkers and then
+    make a second app, like uber, but instead of uber's "drivers", it would be lot owners -->
+    
+    <script>
+        firebase.initializeApp({
+            apiKey: "AIzaSyA-Cm528w-sxWkeP6TxFWFDQ4AbqP1q31I",
+            authDomain: "sharkpark-9b579.firebaseapp.com", 
+            projectId: "sharkpark-9b579", 
+        });
+        const db = firebase.firestore();
+    </script>
+    <script src="createacc.js"></script>
+</body>
+</html>
