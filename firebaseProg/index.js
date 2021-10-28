@@ -64,7 +64,7 @@ auth.onAuthStateChanged((user)=>{
       if (redirect == 1) {
         window.location.href="createacc.html";
       } else if (redirect == 2) {
-        window.location.href="homepage.html";
+        window.location.href="listview.html";
       } else if (redirect == 3) {
         window.location.href="index.html";
       } else {

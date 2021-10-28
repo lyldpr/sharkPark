@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add a spot!</title>
+    <title>List View</title>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
@@ -14,12 +14,14 @@
 <body>
     
     <button onclick="signOut()" id="signOut">Sign Out</button>
+    <button onclick="location.href='mapview.html'" id="mapBtn">Map View</button>
     
-    <input type="text" id="address" placeholder="enter address">
-    <input type="text" id="latitude" placeholder="latitude (will auto fill)">
-    <input type="text" id="longitude" placeholder="longitude (will auto fill)">
-    <button id="spot">Add Spot</button>
-
+    <h4>Testing</h4>
+    <div class="content">
+        <ul id="lists">
+  
+        </ul>
+    </div>
     <script>
         firebase.initializeApp({
             apiKey: "AIzaSyA-Cm528w-sxWkeP6TxFWFDQ4AbqP1q31I",
@@ -28,6 +30,6 @@
         });
         const db = firebase.firestore();
     </script>
-    <script src="partnermain.js"></script>
+    <script src="listview.js"></script>
 </body>
 </html>

@@ -24,6 +24,7 @@ const partner = document.getElementById('partner');
 const auth = firebase.auth(); 
 //sign out function
 
+var redirect = 0;
 
 function signOut(){
     auth.signOut();
@@ -31,6 +32,7 @@ function signOut(){
 
 
 parker.addEventListener('click', ()=>{
+    redirect = 1;
     db.collection('parkers').add({
         usernameParker: usernameParker.value,
         licenseDrivers: licenseDrivers.value,
@@ -42,9 +44,12 @@ parker.addEventListener('click', ()=>{
     licenseDrivers.value = '';
     licensePlate.value = '';
     parkerInfo.value = '';
+
+    window.location.href="listview.html";
 })
 
 partner.addEventListener('click', ()=>{
+    redirect = 2;
     db.collection('partners').add({
         usernamePartner: usernamePartner.value,
         locationLot: locationLot.value,
@@ -55,8 +60,9 @@ partner.addEventListener('click', ()=>{
     locationLot.value = '';
     registration.value = '';
     partnerInfo.value = '';
+    
+    window.location.href="partnermain.html";
 })
-
 
 
 auth.onAuthStateChanged((user)=>{

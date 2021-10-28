@@ -4,22 +4,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add a spot!</title>
-
+    <title>Map View</title>
+    
+    <!--
+        &q=45.46038,9.18259&zoom=14&maptype=roadmap" 
+        &q=Charleston,+SC,+USA
+        32.780925,-79.935150 
+    -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-
 </head>
 <body>
     
     <button onclick="signOut()" id="signOut">Sign Out</button>
+    <button onclick="location.href='listview.html'" id="mapBtn">List View</button>
     
-    <input type="text" id="address" placeholder="enter address">
-    <input type="text" id="latitude" placeholder="latitude (will auto fill)">
-    <input type="text" id="longitude" placeholder="longitude (will auto fill)">
-    <button id="spot">Add Spot</button>
-
+    <iframe
+        width="100%"
+        height="900"
+        frameborder="0"
+        style="border:0"
+        loading="lazy"
+        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA-Cm528w-sxWkeP6TxFWFDQ4AbqP1q31I&q=32.780925,-79.935150&zoom=14&maptype=roadmap" allowfullscreen>
+    </iframe>
+    
+    <div id="map_canvas"></div>
     <script>
         firebase.initializeApp({
             apiKey: "AIzaSyA-Cm528w-sxWkeP6TxFWFDQ4AbqP1q31I",
@@ -28,6 +38,6 @@
         });
         const db = firebase.firestore();
     </script>
-    <script src="partnermain.js"></script>
+    <script src="mapview.js"></script>
 </body>
 </html>
