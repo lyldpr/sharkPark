@@ -2,14 +2,19 @@
 
 pragma solidity =0.8.9;
 
-contract Park {
+contract Park { 
+    address public contractAdr;
+    uint public balance;
+    constructor() payable{
+        contractAdr = msg.sender;
+    }
     struct Owner {
         string name;
         address payable ownerWallet;
         uint price; //change 
         string loc;
         uint numSpots;
-        uint takenSpots; 
+        uint takenSpots; //open spots marked false, taken spots marked true in array_of_Spots
                 }
     
     struct Driver {
@@ -18,6 +23,14 @@ contract Park {
         string license;
         bool parked;
         string currSpot;
+    }
+    
+    event TransferReceived(address, uint);
+    receive() external payable {
+        balance+=msg.value;
+        emit TransferReceived(msg.sender, msg.value);
+    }
+    fallback () external payable {
     }
     
     uint numOwners;
@@ -45,21 +58,21 @@ contract Park {
         d.license = lic;
     }
     
-    function totalSpotCount() public view returns(uint spotNum){              //error something wrong with syntax
+    function totalSpotCount() public view returns(uint spotNum){              
         uint i;
         for (i=0; i<=numOwners; i++) {
             spotNum = spotNum + owners[i].numSpots;
         }
     }
     
-    function availSpotCount() public view returns(uint spotNum){              //error something wrong with syntax
+    function availSpotCount() public view returns(uint spotNum){              
         uint i;
         for (i=0; i<=numOwners; i++) {
             spotNum = spotNum + owners[i].numSpots - owners[i].takenSpots;
         }
     }
     
-    function buySpot(string memory ID, string memory location) public{
+    function buySpot(string memory ID, string memory location) external payable{
         uint i;
         uint ownerID;
         for (i=0; i<=numOwners; i++){
@@ -73,10 +86,11 @@ contract Park {
         Owner storage o = owners[ownerID];
         if (o.takenSpots<o.numSpots){
             o.takenSpots++;
+            o.ownerWallet.transfer(100 wei);
             //transact ethereum
         }
     }
-    function compareStrings(string memory a, string memory b) public view returns (bool) {
+    function compareStrings(string memory a, string memory b) public pure returns (bool) {
         return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))));
     }
     
@@ -94,9 +108,11 @@ contract Park {
         Owner storage o = owners[ownerID];
         o.numSpots = o.numSpots+change;
     }
+    function balanceOf() external view returns(uint){
+        return address(this).balance;
+    }
    
 }
-
 
 // Step 1: User clicks if they are Parker or Owner
 // Step 2: User enters in personal info
