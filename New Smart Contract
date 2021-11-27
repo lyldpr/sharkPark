@@ -1,0 +1,141 @@
+//SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.9;
+
+contract Park {
+   constructor() payable {
+       address contractAdr = msg.sender;
+   }
+    event TransferReceived(address, uint);
+    receive() external payable {
+        emit TransferReceived(msg.sender, msg.value);
+    }
+    fallback () external payable {
+    }
+    function getBalance() public view returns (uint){
+        return address(this).balance;
+    }
+    
+    struct StartandEnd{
+        uint startTime;
+        uint endTime;
+    }
+    
+    struct Spot {
+        bool taken;
+        uint numTimes;
+        mapping (uint => StartandEnd) times;
+    }
+    
+    struct Lot {
+        string locationID;
+        uint numSpots;
+        mapping (uint => Spot) spots;
+    }
+    
+    struct SpotOwner {
+        string uniqueID;
+        address payable ownerWallet;
+        uint numLots;
+        mapping (uint => Lot) lots;
+    }
+    
+    uint numOwners;
+    mapping (uint => SpotOwner) owners;
+
+    function getTime() public view returns (uint){
+        return block.timestamp;
+    }
+
+    function compareStrings(string memory a, string memory b) public pure returns (bool) {
+        return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))));
+    }
+
+    function findOwner(string memory ownerID) public view returns(uint){
+        for(uint i = 0;i<numOwners;i++){
+            if(compareStrings(ownerID,owners[i].uniqueID)){
+                return i;
+            }
+        }
+        return 420;
+    }
+
+    function findLot(string memory ownerID, string memory locID) public view returns(uint){
+        uint tempID = findOwner(ownerID);
+        for(uint i = 0;i<=owners[tempID].numLots;i++){
+            if(compareStrings(locID,owners[tempID].lots[i].locationID)){
+                return i;
+            }
+        }
+        return 420;
+    }
+
+    function getStartTime(string memory ownerID,string memory locID) public view returns(uint){
+        uint ownTemp = findOwner(ownerID);
+        uint lotTemp = findLot(ownerID,locID);
+        return owners[ownTemp].lots[lotTemp].spots[0].times[0].startTime;
+    }
+
+    function resetTimes() public{
+        SpotOwner storage o;
+        Lot storage l;
+        Spot storage s;
+        
+        for(uint a = 0;a<numOwners;a++){
+            o=owners[a];
+            for(uint b = 0;b<o.numLots;b++){
+                l=o.lots[b];
+                for(uint c = 0;c<l.numSpots;c++){
+                    s=l.spots[c];
+                    s.numTimes=0;
+                    s.times[0].startTime=0;
+                    s.times[0].endTime=0;
+                }
+            }
+        }
+    }
+
+    function newOwner(string memory ownerID, address payable ownerAdr) public{
+        uint arrayID = numOwners++; 
+        SpotOwner storage o = owners[arrayID];
+        o.uniqueID = ownerID;
+        o.ownerWallet = ownerAdr;
+    }
+
+    function addLot(string memory ownerID, string memory locID, uint numOfSpots) public {
+        uint tempID = findOwner(ownerID);
+        SpotOwner storage o = owners[tempID];
+        uint lotTemp = o.numLots++;
+        o.lots[lotTemp].locationID = locID;
+        o.lots[lotTemp].numSpots = numOfSpots;
+    }
+
+    function reserveSpot(string memory ownerID, string memory locID, uint timeStart, uint timeEnd) public payable returns(bool){
+        uint ownerTemp = findOwner(ownerID);
+        uint lotTemp = findLot(ownerID,locID);
+        uint timeTemp;
+        Lot storage l = owners[ownerTemp].lots[lotTemp];
+        Spot storage s;
+        StartandEnd storage t;
+        bool available = true;
+        for(uint i = 0;i<=l.numSpots;i++){
+                s = l.spots[i];
+                available = true;
+            for(uint n=0;n<=s.numTimes;n++){
+                t = s.times[n];
+                if((timeStart<=t.startTime && timeEnd>=t.endTime) || (timeStart>=t.startTime && timeStart<=t.endTime) || (timeEnd>=t.startTime && timeEnd<=t.endTime)){
+                    available = false;
+                    break;
+                }
+            }
+            if(available==true){
+                timeTemp = s.numTimes++;
+                s.times[timeTemp].startTime = timeStart;
+                s.times[timeTemp].endTime = timeEnd;
+                return true;
+            }
+        }
+        return false;
+    }
+
+        
+}
