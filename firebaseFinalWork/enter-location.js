@@ -1,0 +1,193 @@
+
+import Image from 'next/image'
+import IMG_0885 from '/pages/posts/IMG_0885.jpeg'
+
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBktSIE9SmOZV50CHGXe4vF8fBiUl7qHr8",
+  authDomain: "sharkpark-9b579.firebaseapp.com", 
+  projectId: "sharkpark-9b579", 
+  storageBucket: "sharkpark-9b579.appspot.com",
+  messagingSenderId: "565602639536",
+  appId: "1:565602639536:web:3771ee87e03643b6db2575",
+  measurementId: "G-ZM3JYBW45T"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const db = firebase.firestore();
+
+function redirectingLogout() {
+    window.location.href="http://localhost:3000/";
+  }
+  const signingOut = async () => {
+    await auth.signOut();
+    redirectingLogout();
+  };
+
+auth.onAuthStateChanged((user)=>{
+    if(user){
+        var email = user.email;
+        alert("Active user "+email);
+    }else{
+      alert("No Active user Found")
+    }
+})
+/*
+<a href="http://localhost:3000/posts/parking-spots">
+     <center>
+        <input class="Button" type="button" value="Show Available Parking Spots"></input>
+    </center>
+</a>
+*/
+export default function enterLocation() {
+    return(
+
+    <><main>
+       
+            <title>SharkPark</title>
+        
+
+        <center>
+            <Image src={IMG_0885} height = {250} width= {300}/>
+        </center>
+            
+        <center>
+            <h2 className="label"> Find a Parking Spot </h2>
+        </center>
+
+        <center>
+            <label className="label"> Parking From... </label>
+            <input className="font" type="text" placeholder="Start Date "></input>
+            <input className="font" type="text" placeholder="End Date " ></input>
+            <input className="font" type="text" placeholder="Start Time" ></input>
+            <input className="font" type="text" placeholder="End Time" ></input>
+        </center>
+
+        <div className="wrapper">
+            <img className="search-icon" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDU2Ljk2NiA1Ni45NjYiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDU2Ljk2NiA1Ni45NjY7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iMTZweCIgaGVpZ2h0PSIxNnB4Ij4KPHBhdGggZD0iTTU1LjE0Niw1MS44ODdMNDEuNTg4LDM3Ljc4NmMzLjQ4Ni00LjE0NCw1LjM5Ni05LjM1OCw1LjM5Ni0xNC43ODZjMC0xMi42ODItMTAuMzE4LTIzLTIzLTIzcy0yMywxMC4zMTgtMjMsMjMgIHMxMC4zMTgsMjMsMjMsMjNjNC43NjEsMCw5LjI5OC0xLjQzNiwxMy4xNzctNC4xNjJsMTMuNjYxLDE0LjIwOGMwLjU3MSwwLjU5MywxLjMzOSwwLjkyLDIuMTYyLDAuOTIgIGMwLjc3OSwwLDEuNTE4LTAuMjk3LDIuMDc5LTAuODM3QzU2LjI1NSw1NC45ODIsNTYuMjkzLDUzLjA4LDU1LjE0Niw1MS44ODd6IE0yMy45ODQsNmM5LjM3NCwwLDE3LDcuNjI2LDE3LDE3cy03LjYyNiwxNy0xNywxNyAgcy0xNy03LjYyNi0xNy0xN1MxNC42MSw2LDIzLjk4NCw2eiIgZmlsbD0iIzAwMDAwMCIvPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8Zz4KPC9nPgo8L3N2Zz4K" />
+            <input className="search" placeholder="Enter City or Zipcode" type="text" />
+            <img className="clear-icon" src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUxLjk3NiA1MS45NzYiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxLjk3NiA1MS45NzY7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iMTZweCIgaGVpZ2h0PSIxNnB4Ij4KPGc+Cgk8cGF0aCBkPSJNNDQuMzczLDcuNjAzYy0xMC4xMzctMTAuMTM3LTI2LjYzMi0xMC4xMzgtMzYuNzcsMGMtMTAuMTM4LDEwLjEzOC0xMC4xMzcsMjYuNjMyLDAsMzYuNzdzMjYuNjMyLDEwLjEzOCwzNi43NywwICAgQzU0LjUxLDM0LjIzNSw1NC41MSwxNy43NCw0NC4zNzMsNy42MDN6IE0zNi4yNDEsMzYuMjQxYy0wLjc4MSwwLjc4MS0yLjA0NywwLjc4MS0yLjgyOCwwbC03LjQyNS03LjQyNWwtNy43NzgsNy43NzggICBjLTAuNzgxLDAuNzgxLTIuMDQ3LDAuNzgxLTIuODI4LDBjLTAuNzgxLTAuNzgxLTAuNzgxLTIuMDQ3LDAtMi44MjhsNy43NzgtNy43NzhsLTcuNDI1LTcuNDI1Yy0wLjc4MS0wLjc4MS0wLjc4MS0yLjA0OCwwLTIuODI4ICAgYzAuNzgxLTAuNzgxLDIuMDQ3LTAuNzgxLDIuODI4LDBsNy40MjUsNy40MjVsNy4wNzEtNy4wNzFjMC43ODEtMC43ODEsMi4wNDctMC43ODEsMi44MjgsMGMwLjc4MSwwLjc4MSwwLjc4MSwyLjA0NywwLDIuODI4ICAgbC03LjA3MSw3LjA3MWw3LjQyNSw3LjQyNUMzNy4wMjIsMzQuMTk0LDM3LjAyMiwzNS40NiwzNi4yNDEsMzYuMjQxeiIgZmlsbD0iIzAwMDAwMCIvPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo=" />
+        </div> 
+  
+        <h1>
+            <button id="spot" onClick={() => {signingOut();}}>{" "} Logout </button>
+        </h1>   
+
+        </main>
+        
+        <style>{`
+        .input-container input {
+            border: none;
+            box-sizing: border-box;
+            outline: 0;
+            padding: .75rem;
+            position: relative;
+            width: 100%;
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            background: transparent;
+            bottom: 0;
+            color: transparent;
+            cursor: pointer;
+            height: auto;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: auto;
+        }
+        .label {
+            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+            sans-serif;
+            margin: 1.5rem;
+
+        }
+        .x .c2-p {
+            transform: translateZ(0px);
+        }
+        .x .c2-n {
+            background-color: rgb(254, 218, 213);
+        }
+        .x .c2-m {
+            border-radius: 50%;
+        }
+        .font {
+            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+            sans-serif;
+            padding: 5px;
+            border: 1.5px solid Gainsboro;
+            border-radius: 5px;
+            margin: 5px;
+            display:inline-grid;
+            
+            
+        }
+         .font:focus {
+            border: 3px solid navy;
+        }
+        .Button {
+            height: 40px;
+            padding: 0px  10px 35px 10px;
+            border-radius: 5px;
+            line-height: 38px;
+            border: 1.5px solid gray;
+            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+                    Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+                    sans-serif;
+        }
+                .Button:hover {
+                     border: 3px solid gray;
+   
+                 }
+        .wrapper {
+            position: relative;
+            display: flex;
+            min-width: 100px;
+        }
+        .search-icon {
+            position: absolute;
+            top: 35px;
+            left: 25px;
+            width: 14px;
+        }
+
+    .clear-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 10px;
+    cursor: pointer;
+    
+  }
+  .search {
+    border: 1.5px solid Gainsboro;
+    border-radius: 5px;
+    height: 50px;
+    width: 100%;
+    padding: 2px 23px 2px 30px;
+    outline: 0;
+    background-color: white;
+    margin: 12px;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+            sans-serif;
+    
+  }
+  .search:focus {
+    border: 3px solid navy;
+    background-color: white;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+            sans-serif;
+  }
+    `}</style></>
+    )
+
+}
